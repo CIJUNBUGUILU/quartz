@@ -1,3 +1,15 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// 让 Callout 内部文字不再贴边框
+.callout {
+  padding: 1rem 1.25rem;
+}
+
+.callout-content {
+  padding: 0.5rem 0;
+}
+
+// 标题已经有图标占位，稍微收紧一点避免整体过松
+.callout-title {
+  padding: 0.25rem 0;
+}
