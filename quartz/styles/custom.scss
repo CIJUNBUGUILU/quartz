@@ -184,3 +184,14 @@ hr {
   border: 0;
   border-top: 1px solid var(--lightgray);
 }
+
+// --------------------------------------------------
+// 10. 主题切换按钮：浅色/深色模式下都要看得见
+// --------------------------------------------------
+// tokyo-night 主题用 mask-image 实现图标，背景色由 --quartz-icon-color 控制。
+// 浅色模式下该变量可能过浅，导致按钮跟背景融为一体，这里强制修正。
+// --dark 在 light 模式下是深色文本，在 dark 模式下是浅色文本，正好都跟背景形成对比。
+:root[saved-theme="light"] button.darkmode,
+:root[saved-theme="dark"] button.darkmode {
+  background: var(--dark) !important;
+}
