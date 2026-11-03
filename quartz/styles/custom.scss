@@ -270,3 +270,52 @@ a.internal.tag-link,
   .search-button:hover,
   .recent-notes .recent-li:hover { transform: none; }
 }
+
+// --------------------------------------------------
+// 7. 移动端抗溢出（2026-11-04 unslop 渲染审计：420px 下 13 处 text_overlap / 横向溢出）
+//    根因：中文长链接与行内 code 不换行，把 ul > li 顶出视口，进而整页横向滚动。
+// --------------------------------------------------
+@media all and ($mobile) {
+  #quartz-body {
+    overflow-x: clip;
+  }
+
+  article {
+    padding: 0 0.9rem;
+  }
+
+  .sidebar {
+    padding: 0.75rem 0.6rem;
+    border-radius: 14px;
+  }
+
+  // 任何长串（中文链接、行内代码、路径）都必须能断行，否则会顶破列宽
+  article li,
+  article p,
+  article td,
+  article a,
+  .recent-notes .desc h3,
+  .recent-notes .desc a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  code {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+
+  // 列表项里的行内代码原本会与后续文字重叠，给一点左右余量
+  article li code {
+    margin: 0 0.15rem;
+  }
+}
+
+// 搜索按钮文字：原配色在浅底上只有 2.77:1，达不到 AA 的 4.5:1
+// 用高优先级选择器压过 Quartz 默认的 .search-button p（base.scss 在 custom 之后加载）
+.search .search-button,
+.search .search-button p,
+.search .search-button svg {
+  color: #3b2b33 !important;
+  fill: #3b2b33 !important;
+}
