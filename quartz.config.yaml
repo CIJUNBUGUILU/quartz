@@ -1,12 +1,10 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: CIJUN的笔记
-  pageTitleSuffix: ""
+  pageTitle: CIJUN 的笔记
+  pageTitleSuffix: " · CIJUN 的笔记"
   enableSPA: true
   enablePopovers: true
-  analytics:
-    provider: plausible
-  locale: en-US
+  locale: zh-CN
   baseUrl: notes.cijun.win
   ignorePatterns:
     - private
@@ -203,8 +201,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        主站: https://cijun.win
+        笔记站: https://notes.cijun.win
+        GitHub: https://github.com/CIJUNBUGUILU
     layout:
       position: footer
       priority: 50
