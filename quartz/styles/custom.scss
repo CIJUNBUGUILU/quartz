@@ -1,15 +1,31 @@
 @use "./variables.scss" as *;
 
 // ============================================================
-// 全局排版优化：让 Quartz 站点更通透、更易读
+// 樱花粉主题 · 2026-11-03
+// 参考 xuehusang.cn 的设计语言：樱花粉主色 / 毛玻璃卡片 / 大圆角 / 柔和阴影 / 系统中文黑体
+// 配色主源在 quartz.config.yaml 的 theme.colors；这里管质感、圆角、字体与动效。
 // ============================================================
 
-// --------------------------------------------------
-// 1. 页面主体：内容区更宽、两边更透气
-// --------------------------------------------------
+:root {
+  --sk-pink: #ffb7c5;
+  --sk-pink-deep: #e86f99;
+  --sk-pink-dark: #cf527f;
+  --sk-radius: 20px;
+  --sk-radius-sm: 12px;
+  --sk-glass: rgba(255, 255, 255, 0.62);
+  --sk-glass-dark: rgba(28, 22, 26, 0.62);
+  --sk-shadow: 0 10px 30px rgba(207, 82, 127, 0.1);
+  --sk-shadow-hover: 0 14px 36px rgba(207, 82, 127, 0.18);
+}
+
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// 1. 页面主体：内容区更舒展
 article {
-  // 桌面端稍微放宽一点，让代码和长公式不那么局促
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   padding: 0 1.25rem;
 
@@ -18,9 +34,6 @@ article {
   }
 }
 
-// --------------------------------------------------
-// 2. 段落与标题间距
-// --------------------------------------------------
 article p {
   line-height: 1.85;
   margin: 0.75rem 0;
@@ -28,46 +41,52 @@ article p {
 
 article h1,
 article h2,
-article h3,
-article h4,
-article h5,
-article h6 {
+article h3 {
   line-height: 1.35;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
+  font-weight: 700;
 }
 
-article h1 {
-  margin-top: 1.5rem;
+// 一级标题：粉色渐变字 + 小段渐隐下划线
+article > h1 {
+  font-size: 1.9rem;
+  background: linear-gradient(90deg, var(--sk-pink-deep), var(--sk-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 4px;
+    margin-top: 0.6rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--sk-pink), transparent);
+  }
 }
 
-// --------------------------------------------------
-// 3. 列表：行高和左侧留白更舒适
-// --------------------------------------------------
-article ul,
-article ol {
-  margin: 0.75rem 0;
-  padding-left: 1.75rem;
+// 2. 链接：粉色 + 渐变下划线
+article a.internal,
+article a.external {
+  color: var(--sk-pink-deep);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--sk-pink) 60%, transparent);
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: var(--sk-pink-dark);
+    border-bottom-color: var(--sk-pink-dark);
+  }
 }
 
-article li {
-  line-height: 1.8;
-  margin: 0.35rem 0;
-}
-
-article li > ul,
-article li > ol {
-  margin: 0.25rem 0;
-}
-
-// --------------------------------------------------
-// 4. Callout：更大的内边距、更柔和的圆角和阴影
-// --------------------------------------------------
+// 3. Callout / 引用 / 代码 / 表格 / 图片：统一大圆角 + 柔和阴影
 .callout {
-  border-radius: 8px;
+  border-radius: var(--sk-radius-sm);
   padding: 1rem 1.25rem;
   margin: 1.25rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 10px rgba(207, 82, 127, 0.07);
 
   .callout-title {
     gap: 0.5rem;
@@ -78,120 +97,174 @@ article li > ol {
   .callout-content {
     padding: 0.5rem 0;
 
-    // callout 内部元素第一次不要顶头
-    > *:first-child {
-      margin-top: 0;
-    }
-
-    > *:last-child {
-      margin-bottom: 0;
-    }
-
-    p {
-      margin: 0.5rem 0;
-    }
-
-    ul,
-    ol {
-      margin: 0.5rem 0;
-    }
-
-    li {
-      margin: 0.3rem 0;
-      line-height: 1.75;
-    }
+    > *:first-child { margin-top: 0; }
+    > *:last-child { margin-bottom: 0; }
+    p { margin: 0.5rem 0; }
+    ul, ol { margin: 0.5rem 0; }
+    li { margin: 0.3rem 0; line-height: 1.75; }
   }
 }
 
-// --------------------------------------------------
-// 5. 引用块：左侧强调线 + 舒适内边距
-// --------------------------------------------------
 blockquote {
-  border-left: 3px solid var(--secondary);
-  background: color-mix(in srgb, var(--lightgray) 30%, transparent);
-  border-radius: 0 8px 8px 0;
+  border-left: 3px solid var(--sk-pink);
+  background: color-mix(in srgb, var(--sk-pink) 12%, transparent);
+  border-radius: 0 var(--sk-radius-sm) var(--sk-radius-sm) 0;
   padding: 0.75rem 1.25rem;
   margin: 1rem 0;
 
-  p {
-    margin: 0.4rem 0;
-  }
+  p { margin: 0.4rem 0; }
 }
 
-// --------------------------------------------------
-// 6. 代码块与行内代码
-// --------------------------------------------------
 pre {
-  border-radius: 8px;
+  border-radius: var(--sk-radius-sm);
   padding: 1rem 1.25rem;
   margin: 1rem 0;
   overflow-x: auto;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 
-  code {
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
+  code { font-size: 0.9rem; line-height: 1.6; }
 }
 
 code {
   font-family: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
-  padding: 0.15rem 0.35rem;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--lightgray) 50%, transparent);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--sk-pink) 22%, transparent);
 }
 
-// --------------------------------------------------
-// 7. 表格：更清晰的边框和悬停效果
-// --------------------------------------------------
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
   margin: 1rem 0;
-  border-radius: 8px;
+  border-radius: var(--sk-radius-sm);
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(207, 82, 127, 0.07);
 
-  th,
-  td {
-    padding: 0.6rem 0.8rem;
-    border: 1px solid var(--lightgray);
+  th, td {
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--sk-pink) 30%, transparent);
   }
 
   th {
-    background: color-mix(in srgb, var(--lightgray) 60%, transparent);
+    background: color-mix(in srgb, var(--sk-pink) 26%, transparent);
     font-weight: 600;
   }
 
-  tr:nth-child(even) {
-    background: color-mix(in srgb, var(--lightgray) 20%, transparent);
-  }
+  tr:last-child td { border-bottom: 0; }
+  tr:nth-child(even) { background: color-mix(in srgb, var(--sk-pink) 8%, transparent); }
 }
 
-// --------------------------------------------------
-// 8. 图片：圆角 + 阴影，避免贴文字
-// --------------------------------------------------
 article img {
-  border-radius: 8px;
+  border-radius: var(--sk-radius-sm);
   margin: 1rem 0;
   max-width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 20px rgba(207, 82, 127, 0.12);
 }
 
-// --------------------------------------------------
-// 9. 分隔线
-// --------------------------------------------------
 hr {
   margin: 2rem 0;
   border: 0;
-  border-top: 1px solid var(--lightgray);
+  border-top: 1px dashed color-mix(in srgb, var(--sk-pink) 55%, transparent);
 }
 
-// --------------------------------------------------
-// 10. 主题切换按钮：浅色/深色模式下都要看得见
-// --------------------------------------------------
-// tokyo-night 主题用 mask-image 实现图标，背景色由 --quartz-icon-color 控制。
-// 浅色模式下该变量可能过浅，导致按钮跟背景融为一体，这里强制修正。
-// --dark 在 light 模式下是深色文本，在 dark 模式下是浅色文本，正好都跟背景形成对比。
+// 4. 侧栏：毛玻璃卡片
+.sidebar {
+  background: var(--sk-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--sk-radius);
+  box-shadow: var(--sk-shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  padding: 1rem 0.9rem;
+  height: fit-content;
+}
+
+// 搜索框 / 图标按钮：胶囊
+.search input,
+.search-button,
+button.darkmode,
+button.readermode {
+  border-radius: 999px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--sk-shadow-hover);
+  }
+}
+
+.search input {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--sk-pink) 55%, transparent);
+  background: color-mix(in srgb, white 55%, transparent);
+}
+
+// 标签 / 面包屑：胶囊
+a.internal.tag-link,
+.tags a,
+.breadcrumb-element a {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sk-pink) 24%, transparent);
+  border-bottom: 0;
+}
+
+.toc,
+.backlinks,
+.recent-notes {
+  border-radius: var(--sk-radius-sm);
+}
+
+.recent-notes .recent-li {
+  border-radius: var(--sk-radius-sm);
+  padding: 0.35rem 0.5rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--sk-pink) 16%, transparent);
+    transform: translateX(2px);
+  }
+}
+
+// 5. 深色模式：同一套语义，换底色
+:root[saved-theme="dark"] {
+  --sk-glass: var(--sk-glass-dark);
+  --sk-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --sk-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.55);
+
+  .sidebar {
+    box-shadow: var(--sk-shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .search input {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  code {
+    background: color-mix(in srgb, var(--sk-pink) 16%, transparent);
+  }
+}
+
+// 主题切换按钮：两种模式下都要看得见（沿用原有修法）
 :root[saved-theme="light"] button.darkmode,
 :root[saved-theme="dark"] button.darkmode {
   background: var(--dark) !important;
+}
+
+// 6. 进页淡入
+@keyframes skFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+#quartz-body .center {
+  animation: skFadeIn 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #quartz-body .center { animation: none; }
+  .search input:hover,
+  .search-button:hover,
+  .recent-notes .recent-li:hover { transform: none; }
 }
