@@ -48,7 +48,9 @@ article h3 {
   font-weight: 700;
 }
 
-// 一级标题：粉色渐变字 + 小段渐隐下划线
+// 正文一级标题：粉色渐变字 + 小段渐隐下划线
+// 注意：Quartz 的正文包在 article > .markdown-preview-view 里，不是 article 的直接子元素
+.markdown-preview-view > h1,
 article > h1 {
   font-size: 1.9rem;
   background: linear-gradient(90deg, var(--sk-pink-deep), var(--sk-pink));
