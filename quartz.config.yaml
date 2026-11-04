@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
+﻿# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
   pageTitle: CIJUN 的笔记
   pageTitleSuffix: " · CIJUN"
@@ -11,7 +11,7 @@ configuration:
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
+    fontOrigin: local                    # 2026-11-04：去掉 4 个 Google Fonts 外链 + preconnect（中文本来走系统字体）
     cdnCaching: true
     typography:
       header: Schibsted Grotesk
@@ -97,7 +97,7 @@ plugins:
     enabled: false
     order: 92
   - source: "@quartz-community/quartz-fonts"
-    enabled: true
+    enabled: false   # 2026-11-04：中文站用系统字体，去掉最后 1 个 Google Fonts 外链
   - source: "@quartz-themes/core"
     enabled: false
     options:
@@ -121,7 +121,7 @@ plugins:
   - source: "@quartz-community/cname"
     enabled: true
   - source: "@quartz-community/canvas-page"
-    enabled: true
+    enabled: false
   - source: "@quartz-community/content-page"
     enabled: true
   - source: "@quartz-community/folder-page"
@@ -221,7 +221,7 @@ plugins:
       priority: 25
       display: mobile-only
   - source: "@quartz-community/bases-page"
-    enabled: true
+    enabled: false
     options: {}
     order: 50
   - source: "@quartz-community/note-properties"
@@ -246,7 +246,7 @@ plugins:
     options: {}
     order: 45
   - source: "@quartz-community/encrypted-pages"
-    enabled: true
+    enabled: false
     options:
       iterations: 600000
       passwordField: password
