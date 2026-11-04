@@ -248,10 +248,19 @@ a.internal.tag-link,
   }
 }
 
-// 主题切换按钮：两种模式下都要看得见（沿用原有修法）
-:root[saved-theme="light"] button.darkmode,
-:root[saved-theme="dark"] button.darkmode {
-  background: var(--dark) !important;
+// 主题切换按钮：**不要**用 `background: var(--dark)` ——
+// `--dark` 在浅色模式是深色字、在深色模式是浅色字，直接拿来当底色必然「反色」
+// （2026-11-04 机主指出：浅色下按钮是黑块、深色下是白块）。改成跟随当前模式的淡色块。
+button.darkmode,
+button.readermode {
+  background: color-mix(in srgb, var(--sk-pink) 30%, white) !important;
+  color: var(--dark) !important;
+}
+
+:root[saved-theme="dark"] button.darkmode,
+:root[saved-theme="dark"] button.readermode {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--dark) !important;
 }
 
 // 6. 进页淡入
